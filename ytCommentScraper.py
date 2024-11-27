@@ -71,7 +71,8 @@ if __name__=="__main__":
     driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
     '''
     # 2) 최신크롬드라이버 다운경로: https://googlechromelabs.github.io/chrome-for-testing/
-    driver = webdriver.Chrome(executable_path='~/Documents/YoutubeComment/ChromeDriverLatest/chromedriver-mac-x64/chromedriver', options=options) # TODO; 올바른 경로로 설정
+    # 로컬에서 크롬 브라우저를 열고, Google Chrome 정보를 보고 버전부터 확인할 것.
+    driver = webdriver.Chrome(executable_path='/Users/yungi/Documents/YoutubeComment/ChromeDriverLatest/chromedriver-mac-x64/chromedriver', options=options) # TODO; Should be 'absolute path'.
     driver.maximize_window()
 
     # Crawling Youtube Video's URL
@@ -153,13 +154,15 @@ if __name__=="__main__":
     
     result_df = pd.DataFrame(data) 
     now = datetime.datetime.now()
-    scrap_time = f"_{now.year}{now.month:02d}{now.day:02d}_{now.hour:02d}{now.minute:02d}_0"
+    scrap_time = f"_{now.year}{now.month:02d}{now.day:02d}_{now.hour:02d}{now.minute:02d}"
     FILENAME = "YOUTUBE_COMMENTS_RESULTS" # TODO: filename for prefix
     full_name = FILENAME + scrap_time
-    BasePath = '~/Documents/YoutubeComment' # TODO: saving path
+    BasePath = '~/Documents/YoutubeComment' # TODO: Saving path 
+    '''
     while os.path.exists(os.path.join(BasePath, full_name)):
         idx = full_name.split('_')[-1]
         full_name = full_name[:-len(idx)] + str(int(idx) + 1)
+    '''
 
     full_name += '.pkl'
-    result_df.to_pickle(full_name)
+    result_df.to_pickle(os.path.join(BasePath, full_name))
