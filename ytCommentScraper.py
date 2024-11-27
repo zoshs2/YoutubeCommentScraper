@@ -63,6 +63,7 @@ if __name__=="__main__":
     options.add_argument("lang=ko_KR")
     
     '''
+    # 2024.11 수정
     # 1) 일반적으로 쓰이는 방법: 24년 11월 기준, 크롬클라이언트(실제 우리가 로컬에서 쓰는 브라우저의) 버전은 131 인데, 
     # ChromeDriverManager().install()로 하면, 131 버전과 호환되는 드라이버 설치가 불가능함.
     # 따라서, 이 경우에는 직접 크롬드라이버를 다운받아서 executable_path로 지정해줘야 함.
@@ -126,13 +127,23 @@ if __name__=="__main__":
 
     data = {'youtube_id': [], 'comment': []}
     for j in range(len(comments_list)):
+        '''
+        # 2024.11 수정
+        # 유튜브 html 구조가 바껴서 더 이상 아래 문구로는 서칭이 안됨.
         comment = comments_list[j].find('yt-formatted-string',{'id':'content-text'}).text
+        '''
+        comment = comments_list[j].find('yt-attributed-string', {'id': 'content-text'}).text # 새로운 find 문구
         comment = comment.replace('\n', '')
         comment = comment.replace('\r', '')
         comment = comment.replace('\t', '')
         comment = comment.replace(' ', '')
 
+        '''
+        # 2024.11 수정
+        # 유튜브 댓글 아이디에 해당하는 구조 역시 바껴서 아래 문구로는 서칭 안됨.
         youtube_id = comments_list[j].find('a', {'id': 'author-text'}).span.text
+        '''
+        youtube_id = comments_list[j].find('span', {'class': 'style-scope ytd-comment-view-model style-scope ytd-comment-view-model'}).text.strip() # 새로운 find 문구, '@아이디' 로 추출
         youtube_id = youtube_id.replace('\n', '') 
         youtube_id = youtube_id.replace('\t', '')
         youtube_id = youtube_id.strip()
