@@ -1,4 +1,4 @@
-# YouTube Commnt Scraper
+# YouTube Comment Scraper
 
 This project is a Python-based tool for scraping YouTube comments using `BeautifulSoup` and `Selenium`. Follow the instructions below to set up the environment and execute the script.
 
