@@ -77,7 +77,7 @@ if __name__=="__main__":
 
     # Crawling Youtube Video's URL
     data_list = []
-    driver.get("https://www.youtube.com/watch?v=jNQXAC9IVRw") # TODO: 탐색하고자 하는 유튭 URL 
+    driver.get("https://www.youtube.com/watch?v=BWxYWnwi08o") # TODO: 탐색하고자 하는 유튭 URL 
     # Caution!!! When a browser window popped out, you should come back and stay in the terminal where you ran this script, till < Notice Message > shown.
     
     print("< Notice Message >:: Go Back to Web, and Staring at it")
