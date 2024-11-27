@@ -1,4 +1,4 @@
-name: youtube_world
+name: youtube_comments
 channels:
   - conda-forge
   - defaults
