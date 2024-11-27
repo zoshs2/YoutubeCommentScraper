@@ -61,7 +61,16 @@ if __name__=="__main__":
     options.add_argument('--no-sandbox')
     options.add_argument("user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36")
     options.add_argument("lang=ko_KR")
+    
+    '''
+    # 1) 일반적으로 쓰이는 방법: 24년 11월 기준, 크롬클라이언트(실제 우리가 로컬에서 쓰는 브라우저의) 버전은 131 인데, 
+    # ChromeDriverManager().install()로 하면, 131 버전과 호환되는 드라이버 설치가 불가능함.
+    # 따라서, 이 경우에는 직접 크롬드라이버를 다운받아서 executable_path로 지정해줘야 함.
+    
     driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
+    '''
+    # 2) 최신크롬드라이버 다운경로: https://googlechromelabs.github.io/chrome-for-testing/
+    driver = webdriver.Chrome(executable_path='~/Documents/YoutubeComment/ChromeDriverLatest/chromedriver-mac-x64/chromedriver', options=options) # TODO; 올바른 경로로 설정
     driver.maximize_window()
 
     # Crawling Youtube Video's URL
@@ -136,7 +145,7 @@ if __name__=="__main__":
     scrap_time = f"_{now.year}{now.month:02d}{now.day:02d}_{now.hour:02d}{now.minute:02d}_0"
     FILENAME = "YOUTUBE_COMMENTS_RESULTS" # TODO: filename for prefix
     full_name = FILENAME + scrap_time
-    BasePath = '/Users/Documents' # TODO: saving path
+    BasePath = '~/Documents/YoutubeComment' # TODO: saving path
     while os.path.exists(os.path.join(BasePath, full_name)):
         idx = full_name.split('_')[-1]
         full_name = full_name[:-len(idx)] + str(int(idx) + 1)
